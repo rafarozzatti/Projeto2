@@ -62,27 +62,27 @@ CREATE TABLE Autor (
     nacionalidade VARCHAR(50)
 );
 
-CREATE TABLE Gênero (
+CREATE TABLE Genero (
     id_genero INT PRIMARY KEY,
     descricao VARCHAR(100),
     categoria VARCHAR(50),
     popularidade INT
 );
 
-CREATE TABLE Usuário (
+CREATE TABLE Usuario (
     id_usuario INT PRIMARY KEY,
     nome VARCHAR(255),
     data_cadastro DATE,
     tipo_usuario VARCHAR(50)
 );
 
-CREATE TABLE Empréstimo (
+CREATE TABLE Emprestimo (
     id_emprestimo INT PRIMARY KEY,
     data_emprestimo DATE,
     data_devolucao DATE,
     status VARCHAR(50),
     id_usuario INT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuário(ID)
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(ID)
 );
 
 CREATE TABLE Livro_Autor (
@@ -93,19 +93,19 @@ CREATE TABLE Livro_Autor (
     FOREIGN KEY (id_autor) REFERENCES Autor(id_autor)
 );
 
-CREATE TABLE Livro_Gênero (
+CREATE TABLE Livro_Genero (
     id_livro INT,
     id_genero INT,
     PRIMARY KEY (id_livro, id_genero),
     FOREIGN KEY (id_livro) REFERENCES Livro(id_livro),
-    FOREIGN KEY (id_genero) REFERENCES Gênero(id_genero)
+    FOREIGN KEY (id_genero) REFERENCES Genero(id_genero)
 );
 
 CREATE TABLE Emprestimo_Livro (
     id_emprestimo INT,
     id_livro INT,
     PRIMARY KEY (id_emprestimo, id_livro),
-    FOREIGN KEY (id_emprestimo) REFERENCES Empréstimo(id_emprestimo),
+    FOREIGN KEY (id_emprestimo) REFERENCES Emprestimo(id_emprestimo),
     FOREIGN KEY (id_livro) REFERENCES Livro(id_livro)
 );
 ```
@@ -129,17 +129,17 @@ INSERT INTO Autor (id_autor, nome, nacionalidade) VALUES
 (2, 'Aluísio Azevedo', 'Brasileiro');
 
 -- Inserindo dados na tabela Gênero
-INSERT INTO Gênero (id_genero, descricao, categoria, popularidade) VALUES
+INSERT INTO Genero (id_genero, descricao, categoria, popularidade) VALUES
 (1, 'Romance', 'Ficção', 85),
 (2, 'Realismo', 'Ficção', 90);
 
 -- Inserindo dados na tabela Usuário
-INSERT INTO Usuário (id_usuario, nome, data_cadastro, tipo_usuario) VALUES
+INSERT INTO Usuario (id_usuario, nome, data_cadastro, tipo_usuario) VALUES
 (1, 'Carlos Silva', '2024-01-15', 'Estudante'),
 (2, 'Ana Souza', '2024-02-20', 'Professor');
 
 -- Inserindo dados na tabela Empréstimo
-INSERT INTO Empréstimo (id_emprestimo, data_emprestimo, data_devolucao, status, id_usuario) VALUES
+INSERT INTO Emprestimo (id_emprestimo, data_emprestimo, data_devolucao, status, id_usuario) VALUES
 (1, '2024-10-01', '2024-10-15', 'Devolvido', 1),
 (2, '2024-11-05', NULL, 'Pendente', 2);
 
@@ -149,7 +149,7 @@ INSERT INTO Livro_Autor (id_livro, id_autor) VALUES
 (2, 2);
 
 -- Inserindo dados na tabela Livro_Gênero
-INSERT INTO Livro_Gênero (id_livro, id_genero) VALUES
+INSERT INTO Livro_Genero (id_livro, id_genero) VALUES
 (1, 1),
 (2, 2);
 
@@ -172,35 +172,35 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 
 2. **Listar todos os empréstimos com o status 'Pendente' e os detalhes do usuário**
    ```sql
-   SELECT Empréstimo.id_emprestimo, Usuário.nome AS usuario, Empréstimo.data_emprestimo
-   FROM Empréstimo
-   JOIN Usuário ON Empréstimo.id_usuario = Usuário.id_usuario
-   WHERE Empréstimo.status = 'Pendente';
+   SELECT Emprestimo.id_emprestimo, Usuario.nome AS usuario, Emprestimo.data_emprestimo
+   FROM Emprestimo
+   JOIN Usuario ON Emprestimo.id_usuario = Usuario.id_usuario
+   WHERE Emprestimo.status = 'Pendente';
    ```
 
 3. **Contar quantos livros cada usuário já emprestou**
    ```sql
-   SELECT Usuário.nome, COUNT(Emprestimo_Livro.id_livro) AS total_livros
-   FROM Usuário
-   JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
-   JOIN Emprestimo_Livro ON Empréstimo.id_emprestimo = Emprestimo_Livro.id_emprestimo
-   GROUP BY Usuário.nome;
+   SELECT Usuario.nome, COUNT(Emprestimo_Livro.id_livro) AS total_livros
+   FROM Usuario
+   JOIN Emprestimo ON Usuario.id_usuario = Emprestimo.id_usuario
+   JOIN Emprestimo_Livro ON Emprestimo.id_emprestimo = Emprestimo_Livro.id_emprestimo
+   GROUP BY Usuario.nome;
    ```
 
 4. **Listar os livros por gênero e categoria**
    ```sql
-   SELECT Gênero.descricao, Gênero.categoria, Livro.titulo
-   FROM Gênero
-   JOIN Livro_Gênero ON Gênero.id_genero = Livro_Gênero.id_genero
-   JOIN Livro ON Livro_Gênero.id_livro = Livro.id_livro;
+   SELECT Genero.descricao, Genero.categoria, Livro.titulo
+   FROM Genero
+   JOIN Livro_Genero ON Genero.id_genero = Livro_Genero.id_genero
+   JOIN Livro ON Livro_Genero.id_livro = Livro.id_livro;
    ```
 
 5. **Encontrar o usuário com mais empréstimos realizados**
    ```sql
-   SELECT Usuário.nome, COUNT(Empréstimo.id_emprestimo) AS total_emprestimos
-   FROM Usuário
-   JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
-   GROUP BY Usuário.nome
+   SELECT Usuario.nome, COUNT(Emprestimo.id_emprestimo) AS total_emprestimos
+   FROM Usuario
+   JOIN Emprestimo ON Usuario.id_usuario = Emprestimo.id_usuario
+   GROUP BY Usuario.nome
    ORDER BY total_emprestimos DESC
    LIMIT 1;
    ```
@@ -233,16 +233,16 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 9. **Obter a popularidade média dos gêneros e organizá-los em ordem decrescente**
    ```sql
    SELECT descricao, categoria, AVG(popularidade) AS popularidade_media
-   FROM Gênero
+   FROM Genero
    GROUP BY descricao, categoria
    ORDER BY popularidade_media DESC;
    ```
 
 10. **Listar os usuários que pegaram livros emprestados mais recentemente**
     ```sql
-    SELECT Usuário.nome, Empréstimo.data_emprestimo
-    FROM Empréstimo
-    JOIN Usuário ON Empréstimo.id_usuario = Usuário.id_usuario
-    ORDER BY Empréstimo.data_emprestimo DESC
+    SELECT Usuario.nome, Emprestimo.data_emprestimo
+    FROM Emprestimo
+    JOIN Usuario ON Emprestimo.id_usuario = Usuario.id_usuario
+    ORDER BY Emprestimo.data_emprestimo DESC
     LIMIT 5;
     ```
