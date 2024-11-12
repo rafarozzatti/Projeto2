@@ -1,6 +1,4 @@
-Aqui está o projeto atualizado com as modificações solicitadas:
-
----
+# Projeto 2
 
 ### Tema do Projeto: Sistema de Gerenciamento de Biblioteca
 
