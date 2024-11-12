@@ -5,7 +5,7 @@
 #### 1. Modelo Entidade-Relacionamento (MER)
 
 **Entidades:**
-1. **Livro** - Atributos: `id_livro`, `titulo`, `ano_publicacao`, `id_editora` (FK para Editora).
+1. **Livro** - Atributos: `id_livro`, `titulo`, `ano_publicacao`, `id_editora`.
 2. **Autor** - Atributos: `id_autor`, `nome`, `nacionalidade`.
 3. **Gênero** - Atributos: `id_genero`, `descricao`, `categoria`, `popularidade`.
 4. **Usuário** - Atributos: `id_usuario`, `nome`, `data_cadastro`, `tipo_usuario` (ex: estudante, professor).
