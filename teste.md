@@ -19,7 +19,12 @@
 4. **Empréstimo - Livro (1:N)**: Um empréstimo pode incluir vários livros, e cada livro só pode estar em um empréstimo de cada vez.
 5. **Editora - Livro (1:N)**: Cada livro é publicado por uma editora, e uma editora pode publicar vários livros.
 
-#### 2. Modelo Relacional na 3FN (Normalização)
+
+#### . Modelo Entidade Relacionamento
+![alt text](image-1.png)
+
+
+#### 3. Modelo Relacional na 3FN (Normalização)
 
 | Tabela         | Atributos                                                                                   |
 |----------------|---------------------------------------------------------------------------------------------|
@@ -33,7 +38,7 @@
 | Livro_Gênero   | `id_livro` (PK, FK), `id_genero` (PK, FK)                                                   |
 | Emprestimo_Livro | `id_emprestimo` (PK, FK), `id_livro` (FK)                                                |
 
-#### 3. Queries para Criação das Tabelas
+#### 4. Queries para Criação das Tabelas
 
 ```sql
 CREATE TABLE Editora (
@@ -105,7 +110,7 @@ CREATE TABLE Emprestimo_Livro (
 );
 ```
 
-#### 4. Código para Inserção de Dados Aleatórios
+#### 5. Código para Inserção de Dados Aleatórios
 
 ```sql
 -- Inserindo dados na tabela Editora
@@ -156,39 +161,88 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 
 #### 5. Consultas SQL Interessantes
 
-```sql
--- 1. Listar todos os livros com seus autores
-SELECT Livro.titulo, Autor.nome AS autor
-FROM Livro
-JOIN Livro_Autor ON Livro.id_livro = Livro_Autor.id_livro
-JOIN Autor ON Livro_Autor.id_autor = Autor.id_autor;
+1. **Listar todos os livros com seus autores e editoras**
+   ```sql
+   SELECT Livro.titulo, Autor.nome AS autor, Editora.nome AS editora
+   FROM Livro
+   JOIN Livro_Autor ON Livro.id_livro = Livro_Autor.id_livro
+   JOIN Autor ON Livro_Autor.id_autor = Autor.id_autor
+   JOIN Editora ON Livro.id_editora = Editora.id_editora;
+   ```
 
--- 2. Listar todos os empréstimos pendentes
-SELECT Empréstimo.id_emprestimo, Usuário.nome, Empréstimo.data_emprestimo
-FROM Empréstimo
-JOIN Usuário ON Empréstimo.id_usuario = Usuário.id_usuario
-WHERE Empréstimo.status = 'Pendente';
+2. **Listar todos os empréstimos com o status 'Pendente' e os detalhes do usuário**
+   ```sql
+   SELECT Empréstimo.id_emprestimo, Usuário.nome AS usuario, Empréstimo.data_emprestimo
+   FROM Empréstimo
+   JOIN Usuário ON Empréstimo.id_usuario = Usuário.id_usuario
+   WHERE Empréstimo.status = 'Pendente';
+   ```
 
--- 3. Contar quantos livros cada usuário já emprestou
-SELECT Usuário.nome, COUNT(Emprestimo_Livro.id_livro) AS total_livros
-FROM Usuário
-JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
-JOIN Emprestimo_Livro ON Empréstimo.id_emprestimo = Emprestimo_Livro.id_emprestimo
-GROUP BY Usuário.nome;
+3. **Contar quantos livros cada usuário já emprestou**
+   ```sql
+   SELECT Usuário.nome, COUNT(Emprestimo_Livro.id_livro) AS total_livros
+   FROM Usuário
+   JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
+   JOIN Emprestimo_Livro ON Empréstimo.id_emprestimo = Emprestimo_Livro.id_emprestimo
+   GROUP BY Usuário.nome;
+   ```
 
--- 4. Listar livros por gênero
-SELECT Gênero.descricao, Livro.titulo
-FROM Gênero
-JOIN Livro_Gênero ON Gênero.id_genero = Livro_Gênero.id_genero
-JOIN Livro ON Livro_Gênero.id_livro = Livro.id_livro;
+4. **Listar os livros por gênero e categoria**
+   ```sql
+   SELECT Gênero.descricao, Gênero.categoria, Livro.titulo
+   FROM Gênero
+   JOIN Livro_Gênero ON Gênero.id_genero = Livro_Gênero.id_genero
+   JOIN Livro ON Livro_Gênero.id_livro = Livro.id_livro;
+   ```
 
--- 5. Encontrar o usuário com mais empréstimos
-SELECT Usuário.nome, COUNT(Empréstimo.id_emprestimo) AS total_emprestimos
-FROM Usuário
-JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
-GROUP BY Usuário.nome
-ORDER BY total_emprestimos DESC
-LIMIT 1;
-```
+5. **Encontrar o usuário com mais empréstimos realizados**
+   ```sql
+   SELECT Usuário.nome, COUNT(Empréstimo.id_emprestimo) AS total_emprestimos
+   FROM Usuário
+   JOIN Empréstimo ON Usuário.id_usuario = Empréstimo.id_usuario
+   GROUP BY Usuário.nome
+   ORDER BY total_emprestimos DESC
+   LIMIT 1;
+   ```
 
---- 
+6. **Obter o número total de livros por editora**
+   ```sql
+   SELECT Editora.nome, COUNT(Livro.id_livro) AS total_livros
+   FROM Editora
+   JOIN Livro ON Editora.id_editora = Livro.id_editora
+   GROUP BY Editora.nome;
+   ```
+
+7. **Listar autores que já escreveram mais de um livro**
+   ```sql
+   SELECT Autor.nome, COUNT(Livro_Autor.id_livro) AS total_livros
+   FROM Autor
+   JOIN Livro_Autor ON Autor.id_autor = Livro_Autor.id_autor
+   GROUP BY Autor.nome
+   HAVING total_livros > 1;
+   ```
+
+8. **Listar todos os livros que nunca foram emprestados**
+   ```sql
+   SELECT Livro.titulo
+   FROM Livro
+   LEFT JOIN Emprestimo_Livro ON Livro.id_livro = Emprestimo_Livro.id_livro
+   WHERE Emprestimo_Livro.id_emprestimo IS NULL;
+   ```
+
+9. **Obter a popularidade média dos gêneros e organizá-los em ordem decrescente**
+   ```sql
+   SELECT descricao, categoria, AVG(popularidade) AS popularidade_media
+   FROM Gênero
+   GROUP BY descricao, categoria
+   ORDER BY popularidade_media DESC;
+   ```
+
+10. **Listar os usuários que pegaram livros emprestados mais recentemente**
+    ```sql
+    SELECT Usuário.nome, Empréstimo.data_emprestimo
+    FROM Empréstimo
+    JOIN Usuário ON Empréstimo.id_usuario = Usuário.id_usuario
+    ORDER BY Empréstimo.data_emprestimo DESC
+    LIMIT 5;
+    ```
