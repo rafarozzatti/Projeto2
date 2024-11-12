@@ -8,7 +8,7 @@
 1. **Livro** - Atributos: `id_livro`, `titulo`, `ano_publicacao`, `id_editora`.
 2. **Autor** - Atributos: `id_autor`, `nome`, `nacionalidade`.
 3. **Gênero** - Atributos: `id_genero`, `descricao`, `categoria`, `popularidade`.
-4. **Usuário** - Atributos: `id_usuario`, `nome`, `data_cadastro`, `tipo_usuario` (ex: estudante, professor).
+4. **Usuário** - Atributos: `id_usuario`, `nome`, `data_cadastro`, `tipo_usuario`.
 5. **Empréstimo** - Atributos: `id_emprestimo`, `data_emprestimo`, `data_devolucao`, `status`.
 6. **Editora** - Atributos: `id_editora`, `nome`, `localizacao`, `ano_fundacao`.
 
