@@ -20,7 +20,7 @@
 5. **Editora - Livro (1:N)**: Cada livro é publicado por uma editora, e uma editora pode publicar vários livros.
 
 
-#### . Modelo Entidade Relacionamento
+#### 2. Modelo Entidade Relacionamento
 ![alt text](image-1.png)
 
 
