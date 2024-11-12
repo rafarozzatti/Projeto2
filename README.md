@@ -24,6 +24,9 @@
    - **Atributos do relacionamento**: `data_favorito`, `nota` (representa a data em que o livro foi favoritado e a nota dada pelo usuário)
 
 ---
+### Modelo Entidade Relacionamento
+
+![alt text](image.png)
 
 ### Modelo Relacional e Normalização (3FN)
 
