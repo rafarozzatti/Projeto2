@@ -23,6 +23,9 @@
 #### 2. Modelo Entidade Relacionamento
 ![alt text](image-1.png)
 
+![alt text](image-2.png)
+###### Imagem teste
+
 
 #### 3. Modelo Relacional na 3FN (Normalização)
 
