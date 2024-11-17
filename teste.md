@@ -83,7 +83,7 @@ CREATE TABLE Emprestimo (
     data_devolucao DATE,
     status VARCHAR(50),
     id_usuario INT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(ID)
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
 CREATE TABLE Livro_Autor (
