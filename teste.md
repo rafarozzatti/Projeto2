@@ -280,9 +280,9 @@ Antes de começar, certifique-se de ter os seguintes itens configurados:
 
 #### **1.1. Banco de Dados**
 - Você precisará de um Sistema de Gerenciamento de Banco de Dados (SGBD). Alguns exemplos:
-  - **MySQL** (recomendado para iniciantes).
+  - **MySQL**
   - **PostgreSQL**.
-  - **SQLite** (não recomendado para projetos mais complexos).
+  - **SQLite**
 
 #### **1.2. Ferramenta para Executar Scripts SQL**
 - Um editor ou cliente que permita escrever e executar scripts SQL:
