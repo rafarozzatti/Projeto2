@@ -238,3 +238,124 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
     ORDER BY Emprestimo.data_emprestimo DESC
     LIMIT 5;
     ```
+
+### **Passo a Passo para Executar o Código**
+
+Este guia oferece instruções completas para executar o projeto em qualquer ambiente, independentemente do sistema operacional. O objetivo é garantir que todos os passos sejam claros e possam ser seguidos por iniciantes ou por quem já possui experiência.
+
+---
+
+### **1. Pré-requisitos Necessários**
+
+Antes de começar, certifique-se de ter os seguintes itens configurados:
+
+#### **1.1. Banco de Dados**
+- Você precisará de um Sistema de Gerenciamento de Banco de Dados (SGBD). Alguns exemplos:
+  - **MySQL** (recomendado para iniciantes).
+  - **PostgreSQL**.
+  - **SQLite** (não recomendado para projetos mais complexos).
+
+#### **1.2. Ferramenta para Executar Scripts SQL**
+- Um editor ou cliente que permita escrever e executar scripts SQL:
+  - **MySQL Workbench** (para MySQL).
+  - **pgAdmin** (para PostgreSQL).
+  - **DBeaver** (funciona com diversos SGBDs).
+  - **Linha de comando (CLI)** do próprio SGBD.
+
+#### **1.3. Configuração Básica**
+- Verifique se o SGBD está instalado corretamente no seu sistema:
+  - Para MySQL:
+    ```bash
+    mysql --version
+    ```
+  - Para PostgreSQL:
+    ```bash
+    psql --version
+    ```
+- Certifique-se de que o servidor do banco de dados está em execução.
+
+#### **1.4. Acesso ao Banco**
+Você precisará das credenciais para acessar o banco:
+- Usuário (ex.: `root` ou `admin`).
+- Senha (caso configurada).
+- Host (normalmente `localhost`).
+- Porta (3306 para MySQL ou 5432 para PostgreSQL).
+
+---
+
+### **2. Configuração do Banco de Dados**
+
+#### **2.1. Criando o Banco de Dados**
+1. Acesse o SGBD usando sua ferramenta preferida.
+2. Crie um banco de dados para o projeto:
+   ```sql
+   CREATE DATABASE Biblioteca;
+   ```
+3. Após criar o banco, selecione-o para trabalhar:
+   ```sql
+   USE Biblioteca;
+   ```
+
+---
+
+### **3. Criando as Tabelas**
+
+1. Abra a ferramenta que você está usando para executar os scripts SQL.
+2. Copie o bloco de código fornecido na seção *"Queries para Criação das Tabelas"* do projeto e cole no editor SQL.
+3. Execute o script inteiro ou por partes. Certifique-se de que cada tabela seja criada corretamente:
+   ```sql
+   CREATE TABLE Editora (
+       id_editora INT PRIMARY KEY,
+       nome VARCHAR(100),
+       localizacao VARCHAR(100),
+       ano_fundacao INT
+   );
+   -- Continue com as próximas tabelas...
+   ```
+
+4. Após executar, verifique se as tabelas foram criadas com sucesso:
+   - MySQL:
+     ```sql
+     SHOW TABLES;
+     ```
+   - PostgreSQL:
+     ```sql
+     \dt
+     ```
+
+---
+
+### **4. Inserindo Dados no Banco**
+
+1. Copie o bloco de *"Código para Inserção de Dados Aleatórios"*.
+2. Execute os comandos na ordem fornecida para evitar erros de dependência:
+   - Insira os dados em **Editora** antes de referenciá-los em **Livro**.
+   - Exemplo:
+     ```sql
+     INSERT INTO Editora (id_editora, nome, localizacao, ano_fundacao) VALUES
+     (1, 'Editora A', 'São Paulo', 1950),
+     (2, 'Editora B', 'Rio de Janeiro', 1985);
+     ```
+
+3. Confirme que os dados foram inseridos corretamente:
+   - Execute consultas simples:
+     ```sql
+     SELECT * FROM Editora;
+     ```
+
+---
+
+### **5. Testando Consultas SQL**
+
+1. **Execute Consultas de Exemplo**
+   - Use as consultas fornecidas na seção *Consultas SQL Interessantes*. 
+   - Por exemplo:
+     ```sql
+     SELECT Livro.titulo, Autor.nome AS autor, Editora.nome AS editora
+     FROM Livro
+     JOIN Livro_Autor ON Livro.id_livro = Livro_Autor.id_livro
+     JOIN Autor ON Livro_Autor.id_autor = Autor.id_autor
+     JOIN Editora ON Livro.id_editora = Editora.id_editora;
+     ```
+
+---
