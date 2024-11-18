@@ -340,7 +340,11 @@ Você precisará das credenciais para acessar o banco:
 ### **5. Testando Consultas SQL**
 
 1. **Execute Consultas de Exemplo**
-   - Use as consultas fornecidas na seção *Consultas SQL Interessantes*. 
+   - Use as consultas fornecidas na seção *Consultas SQL Interessantes*.
+   - Antes selecione o banco:
+    ```sql
+   USE Biblioteca;
+   ```
    - Por exemplo:
      ```sql
      SELECT Livro.titulo, Autor.nome AS autor, Editora.nome AS editora
