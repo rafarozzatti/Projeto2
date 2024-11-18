@@ -114,47 +114,38 @@ CREATE TABLE Emprestimo_Livro (
 #### 5. Código para Inserção de Dados Aleatórios
 
 ```sql
--- Inserindo dados na tabela Editora
 INSERT INTO Editora (id_editora, nome, localizacao, ano_fundacao) VALUES
 (1, 'Editora A', 'São Paulo', 1950),
 (2, 'Editora B', 'Rio de Janeiro', 1985);
 
--- Inserindo dados na tabela Livro
 INSERT INTO Livro (id_livro, titulo, ano_publicacao, id_editora) VALUES
 (1, 'Dom Casmurro', 1899, 1),
 (2, 'O Cortiço', 1890, 2);
 
--- Inserindo dados na tabela Autor
 INSERT INTO Autor (id_autor, nome, nacionalidade) VALUES
 (1, 'Machado de Assis', 'Brasileiro'),
 (2, 'Aluísio Azevedo', 'Brasileiro');
 
--- Inserindo dados na tabela Gênero
 INSERT INTO Genero (id_genero, descricao, categoria, popularidade) VALUES
 (1, 'Romance', 'Ficção', 85),
 (2, 'Realismo', 'Ficção', 90);
 
--- Inserindo dados na tabela Usuário
 INSERT INTO Usuario (id_usuario, nome, data_cadastro, tipo_usuario) VALUES
 (1, 'Carlos Silva', '2024-01-15', 'Estudante'),
 (2, 'Ana Souza', '2024-02-20', 'Professor');
 
--- Inserindo dados na tabela Empréstimo
 INSERT INTO Emprestimo (id_emprestimo, data_emprestimo, data_devolucao, status, id_usuario) VALUES
 (1, '2024-10-01', '2024-10-15', 'Devolvido', 1),
 (2, '2024-11-05', NULL, 'Pendente', 2);
 
--- Inserindo dados na tabela Livro_Autor
 INSERT INTO Livro_Autor (id_livro, id_autor) VALUES
 (1, 1),
 (2, 2);
 
--- Inserindo dados na tabela Livro_Gênero
 INSERT INTO Livro_Genero (id_livro, id_genero) VALUES
 (1, 1),
 (2, 2);
 
--- Inserindo dados na tabela Emprestimo_Livro
 INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 (1, 1),
 (2, 2);
