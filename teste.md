@@ -357,5 +357,3 @@ Você precisará das credenciais para acessar o banco:
      JOIN Autor ON Livro_Autor.id_autor = Autor.id_autor
      JOIN Editora ON Livro.id_editora = Editora.id_editora;
      ```
-
----
