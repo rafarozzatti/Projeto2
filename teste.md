@@ -238,12 +238,12 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
     ORDER BY Emprestimo.data_emprestimo DESC
     LIMIT 5;
     ```
+    
+---
 
 ### **Passo a Passo para Executar o Código**
 
 Este guia oferece instruções completas para executar o projeto em qualquer ambiente, independentemente do sistema operacional. O objetivo é garantir que todos os passos sejam claros e possam ser seguidos por iniciantes ou por quem já possui experiência.
-
----
 
 ### **1. Pré-requisitos Necessários**
 
@@ -281,8 +281,6 @@ Você precisará das credenciais para acessar o banco:
 - Host (normalmente `localhost`).
 - Porta (3306 para MySQL ou 5432 para PostgreSQL).
 
----
-
 ### **2. Configuração do Banco de Dados**
 
 #### **2.1. Criando o Banco de Dados**
@@ -295,8 +293,6 @@ Você precisará das credenciais para acessar o banco:
    ```sql
    USE Biblioteca;
    ```
-
----
 
 ### **3. Criando as Tabelas**
 
@@ -323,8 +319,6 @@ Você precisará das credenciais para acessar o banco:
      \dt
      ```
 
----
-
 ### **4. Inserindo Dados no Banco**
 
 1. Copie o bloco de *"Código para Inserção de Dados Aleatórios"*.
@@ -342,8 +336,6 @@ Você precisará das credenciais para acessar o banco:
      ```sql
      SELECT * FROM Editora;
      ```
-
----
 
 ### **5. Testando Consultas SQL**
 
