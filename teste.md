@@ -116,39 +116,65 @@ CREATE TABLE Emprestimo_Livro (
 ```sql
 INSERT INTO Editora (id_editora, nome, localizacao, ano_fundacao) VALUES
 (1, 'Editora A', 'São Paulo', 1950),
-(2, 'Editora B', 'Rio de Janeiro', 1985);
+(2, 'Editora B', 'Rio de Janeiro', 1985),
+(3, 'Editora C', 'Belo Horizonte', 1975),
+(4, 'Editora D', 'Curitiba', 1990);
 
 INSERT INTO Livro (id_livro, titulo, ano_publicacao, id_editora) VALUES
 (1, 'Dom Casmurro', 1899, 1),
-(2, 'O Cortiço', 1890, 2);
+(2, 'O Cortiço', 1890, 2),
+(3, 'Iracema', 1865, 3),
+(4, 'Memórias Póstumas de Brás Cubas', 1881, 1),
+(5, 'Vidas Secas', 1938, 4),
+(6, 'A Moreninha', 1844, 3);
 
 INSERT INTO Autor (id_autor, nome, nacionalidade) VALUES
 (1, 'Machado de Assis', 'Brasileiro'),
-(2, 'Aluísio Azevedo', 'Brasileiro');
+(2, 'Aluísio Azevedo', 'Brasileiro'),
+(3, 'José de Alencar', 'Brasileiro'),
+(4, 'Graciliano Ramos', 'Brasileiro'),
+(5, 'Manuel Antônio de Almeida', 'Brasileiro');
 
 INSERT INTO Genero (id_genero, descricao, categoria, popularidade) VALUES
 (1, 'Romance', 'Ficção', 85),
-(2, 'Realismo', 'Ficção', 90);
+(2, 'Realismo', 'Ficção', 90),
+(3, 'Drama', 'Ficção', 78),
+(4, 'Clássico', 'Histórico', 92);
 
 INSERT INTO Usuario (id_usuario, nome, data_cadastro, tipo_usuario) VALUES
 (1, 'Carlos Silva', '2024-01-15', 'Estudante'),
-(2, 'Ana Souza', '2024-02-20', 'Professor');
+(2, 'Ana Souza', '2024-02-20', 'Professor'),
+(3, 'Mariana Lima', '2024-03-10', 'Aluno'),
+(4, 'João Pedro', '2024-05-22', 'Professor');
 
 INSERT INTO Emprestimo (id_emprestimo, data_emprestimo, data_devolucao, status, id_usuario) VALUES
 (1, '2024-10-01', '2024-10-15', 'Devolvido', 1),
-(2, '2024-11-05', NULL, 'Pendente', 2);
-
+(2, '2024-11-05', NULL, 'Pendente', 2),
+(3, '2024-11-10', NULL, 'Pendente', 1),
+(4, '2024-11-15', '2024-11-17', 'Devolvido', 3),
+(5, '2024-11-16', NULL, 'Pendente', 4);
 INSERT INTO Livro_Autor (id_livro, id_autor) VALUES
 (1, 1),
-(2, 2);
+(2, 2),
+(4, 1),
+(3, 3),
+(5, 4),
+(6, 5);
 
 INSERT INTO Livro_Genero (id_livro, id_genero) VALUES
 (1, 1),
-(2, 2);
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 3),
+(6, 4);
 
 INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 (1, 1),
-(2, 2);
+(2, 2),
+(3, 3),
+(4, 5),
+(5, 6);
 ```
 
 #### 5. Consultas SQL Interessantes
@@ -159,15 +185,17 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
    FROM Livro
    JOIN Livro_Autor ON Livro.id_livro = Livro_Autor.id_livro
    JOIN Autor ON Livro_Autor.id_autor = Autor.id_autor
-   JOIN Editora ON Livro.id_editora = Editora.id_editora;
+   JOIN Editora ON Livro.id_editora = Editora.id_editora
+   ORDER BY Editora.nome;
    ```
 
 2. **Listar todos os empréstimos com o status 'Pendente' e os detalhes do usuário**
    ```sql
-   SELECT Emprestimo.id_emprestimo, Usuario.nome AS usuario, Emprestimo.data_emprestimo
+   SELECT Emprestimo.id_emprestimo, Usuario.nome AS usuario, DATE_FORMAT(Emprestimo.data_emprestimo, '%d-%m-%Y') AS data_emprestimo
    FROM Emprestimo
    JOIN Usuario ON Emprestimo.id_usuario = Usuario.id_usuario
-   WHERE Emprestimo.status = 'Pendente';
+   WHERE Emprestimo.status = 'Pendente'
+   ORDER BY Emprestimo.data_emprestimo;
    ```
 
 3. **Contar quantos livros cada usuário já emprestou**
@@ -176,7 +204,8 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
    FROM Usuario
    JOIN Emprestimo ON Usuario.id_usuario = Emprestimo.id_usuario
    JOIN Emprestimo_Livro ON Emprestimo.id_emprestimo = Emprestimo_Livro.id_emprestimo
-   GROUP BY Usuario.nome;
+   GROUP BY Usuario.nome
+   ORDER BY total_livros DESC;
    ```
 
 4. **Listar os livros por gênero e categoria**
@@ -232,7 +261,7 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
 
 10. **Listar os usuários que pegaram livros emprestados mais recentemente**
     ```sql
-    SELECT Usuario.nome, Emprestimo.data_emprestimo
+    SELECT Usuario.nome, DATE_FORMAT(Emprestimo.data_emprestimo, '%d-%m-%Y') AS data_emprestimo
     FROM Emprestimo
     JOIN Usuario ON Emprestimo.id_usuario = Usuario.id_usuario
     ORDER BY Emprestimo.data_emprestimo DESC
