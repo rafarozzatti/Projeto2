@@ -341,7 +341,7 @@ Você precisará das credenciais para acessar o banco:
 
 1. **Execute Consultas de Exemplo**
    - Use as consultas fornecidas na seção *Consultas SQL Interessantes*.
-   - Antes selecione o banco:
+   - Antes de fazer a consulta selecione o banco:
     ```sql
    USE Biblioteca;
    ```
