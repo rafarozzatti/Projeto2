@@ -198,7 +198,7 @@ INSERT INTO Emprestimo_Livro (id_emprestimo, id_livro) VALUES
    ORDER BY Emprestimo.data_emprestimo;
    ```
 
-3. **Contar quantos livros cada usuário já emprestou**
+3. **Contar quantos livros cada usuário já pegou emprestado**
    ```sql
    SELECT Usuario.nome, COUNT(Emprestimo_Livro.id_livro) AS total_livros
    FROM Usuario
