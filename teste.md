@@ -37,7 +37,7 @@
 | Editora        | `id_editora` (PK), `nome`, `localizacao`, `ano_fundacao`                                    |
 | Livro_Autor    | `id_livro` (PK, FK), `id_autor` (PK, FK)                                                    |
 | Livro_Gênero   | `id_livro` (PK, FK), `id_genero` (PK, FK)                                                   |
-| Emprestimo_Livro | `id_emprestimo` (PK, FK), `id_livro` (FK)                                                |
+| Emprestimo_Livro | `id_emprestimo` (PK, FK), `id_livro` (PK, FK)                                                |
 
 #### 4. Queries para Criação das Tabelas
 
